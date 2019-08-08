@@ -1,4 +1,4 @@
-NAME = a.out
+NAME = ft_ls
 SRC = ./ft_ls.c ./get_one_file.c ./ft_sort.c ./get_flag_tab.c ./print_list.c ./ft_l_flag.c ./ft_blocks.c ./ft_files_dirs.c ./print_all.c ./ft_R_flag.c
 HEADER = ./ft_ls.h
 OBJECTS = ./*.o

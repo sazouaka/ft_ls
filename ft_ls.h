@@ -34,27 +34,6 @@ typedef struct  s_dlist
 
 }         t_dlist ;
 
-// typedef struct  s_argv
-// {
-    
-//     time_t mtime;
-//     struct s_argv *next;
-// }               t_dlist;
-
-// typedef struct          s_files
-// {
-//     char                *name;
-//     char                *mode;
-//     long                lings;
-//     char                *uid;
-//     char                *gid;
-//     long long           size;
-//     blkcnt_t            blocks;
-//     time_t              mtime;
-//     char                *date;
-//     struct      s_files *next;
-// }                       t_files;
-
 typedef	struct	s_max
 {
 	int nlink;
@@ -72,7 +51,7 @@ void    	sort_time(t_dlist *node);
 void    	sort_r_time(t_dlist *node);
 void    	sort_by_flag(t_dlist *head, char r, char t);
 int     	flag_search(char c);
-char    	*get_flag_tab(int ac, char **av);
+char    	*get_flag_tab(int ac, char **av, int *index);
 void    	print_list(t_dlist *head);
 void    	ft_l_flag(t_dlist *head, char *tab, int d);
 int     	ft_blocks(t_dlist *head);

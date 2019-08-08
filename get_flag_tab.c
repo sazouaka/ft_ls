@@ -33,7 +33,7 @@ int flag_search(char c)
 //************************************//
 //Function to get table of flags Ralrt//
 //************************************//
-char    *get_flag_tab(int ac, char **av)
+char    *get_flag_tab(int ac, char **av, int *index)
 {
     int i;
     int j;
@@ -43,13 +43,24 @@ char    *get_flag_tab(int ac, char **av)
     tab = (char *)malloc(sizeof(char) * 5);
     i = 0;
     while (i < 5)
-    {
-        tab[i] = '0';
-        i++;
-    }
+        tab[i++] = '0';
     i = 1;
-    while (i < ac && av[i][0] == '-' )
+    while (i < ac && av[i][0] == '-' && av[i][1] != '\0')
     {
+        if (av[i][1] == '-')
+        {
+            if (av[i][2] == '\0')
+            {
+                i++;
+                break;
+            }
+            else
+            {
+                ft_putstr("./ft_ls: illegal option -- -\n");
+                ft_putstr("usage: ./ft_ls [-Ralrt] [file ...]\n");
+                exit(1);
+            }
+        }
         z = 1;
         while (av[i][z])
         {
@@ -66,5 +77,6 @@ char    *get_flag_tab(int ac, char **av)
         }
         i++;
     }
+    *index = i;
     return (tab);
 }

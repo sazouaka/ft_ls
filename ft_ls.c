@@ -18,108 +18,73 @@
 
 t_dlist *ft_ls(DIR *dir, char a, char *str)
 {
-    struct dirent *read;
-    t_dlist *files;
-    t_dlist *head = NULL;
-    files = NULL;
-    char *t = ft_strjoin(str, "/");    
-    while ((read = readdir(dir)))
-    {
-        if ((ft_char(read->d_name, '.')) == 1 && a != 'a')
-            continue;
-        if(!files)
-        {
-            files = get_one_file(read->d_name, ft_strjoin(t, read->d_name));
-            head = files;
-        }
-        else
-        {
-            files->next = get_one_file( read->d_name,ft_strjoin(t, read->d_name));
-            files = files->next;
-        }
-    }
-    closedir(dir);
-    return (head);
+	struct dirent *read;
+	t_dlist *files;
+	t_dlist *head = NULL;
+	files = NULL;
+	char *t = ft_strjoin(str, "/");    
+	while ((read = readdir(dir)))
+	{
+		if ((ft_char(read->d_name, '.')) == 1 && a != 'a')
+			continue;
+		if(!files)
+		{
+			files = get_one_file(read->d_name, ft_strjoin(t, read->d_name));
+			head = files;
+		}
+		else
+		{
+			files->next = get_one_file( read->d_name,ft_strjoin(t, read->d_name));
+			files = files->next;
+		}
+	}
+	closedir(dir);
+	return (head);
 }
 
 void    display_files(t_dlist *files, char *tab)
 {
-    t_dlist *file = NULL, *head = NULL;
-    while(files)
-    {
-       if(!file)
-        {
-            file = get_one_file(files->name, files->name);
-            head = file;
-        }
-        else
-        {
-            file->next = get_one_file(files->name, files->name);
-            file = file->next;
-        }
-        files = files->next;
-    }
-    sort_by_flag(head, tab[3], tab[4]);
-    ft_l_flag(head, tab, 0/*, NULL*/);
+	t_dlist *file = NULL, *head = NULL;
+	while(files)
+	{
+	   if(!file)
+		{
+			file = get_one_file(files->name, files->name);
+			head = file;
+		}
+		else
+		{
+			file->next = get_one_file(files->name, files->name);
+			file = file->next;
+		}
+		files = files->next;
+	}
+	sort_by_flag(head, tab[3], tab[4]);
+	ft_l_flag(head, tab, 0);
 }
 
 int main(int argc, char **argv)
 {
-    t_dlist  *files = NULL;
-	t_dlist  *dirs = NULL;
-    t_dlist  *tmp_file = NULL;
-    char    *tab;
+	t_dlist *files = NULL;
+	t_dlist *dirs = NULL;
+	t_dlist *tmp_file = NULL;
+	char	*tab;
+	int		i;
 
-    tab = get_flag_tab(argc, argv);
-    files = get_files(argc, argv);
-    dirs = get_dirs(argc, argv);
-    tmp_file = files;
-    if (files)
-        display_files(files, tab);
-    if (dirs)
-        print_all(dirs, tab, tmp_file);
-    if (!tmp_file && !dirs)
-    {
-        dirs = get_file(".");
-        print_all(dirs, tab, NULL);
-    }
-    return (0);
+	tab = get_flag_tab(argc, argv, &i);
+	printf("---> %d <--- ac = %d\n",i, argc);
+	exit(0);
+	files = get_files(argc, argv);
+	dirs = get_dirs(argc, argv);
+	tmp_file = files;
+	if (files)
+		display_files(files, tab);
+	if (dirs)
+		print_all(dirs, tab, tmp_file);
+	if (!tmp_file && !dirs)
+	{
+		dirs = get_file(".");
+		print_all(dirs, tab, NULL);
+	}
+	return (0);
 }
-
-//****//
-//old Main//
-//****//
-
-// int main(int ac, char **av)
-// {
-//     char    *tab;
-//     t_dlist *head;
-//     int     i;
-//     DIR     *dir = NULL;
-
-//     tab = get_flag_tab(ac, av);
-//     i = 1;
-//     while (av[i] && av[i][0] == '-')
-//         i++; 
-//     if (i == ac)
-//     {
-//         dir = opendir(".");
-//         head = ft_ls(dir, tab[1]);
-//         sort_by_flag(head, tab[3], tab[4]);
-//         ft_l_flag(head, tab[2]);
-//     }
-//     else
-//     {
-//         while (i < ac)
-//         {
-//             DIR *d;
-
-//             d = opendir(av[i]);
-//             head = ft_ls(d, tab[1]);
-//             sort_by_flag(head, tab[3], tab[4]); 
-//             ft_l_flag(head, tab[2]);
-//             i++;
-//         }
-//     }
-//     return 0;
-// }

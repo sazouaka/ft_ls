@@ -41,12 +41,12 @@ t_dlist *get_file(char *str)
 }
 t_dlist *get_files(int argc, char **argv)
 {
-    int i = 1;
+    int i;
     t_dlist *files = NULL;
 	t_dlist *head1 = NULL;
 	char	*tab;
 
-	tab = get_flag_tab(argc, argv);
+	tab = get_flag_tab(argc, argv, &i);
     while(i < argc)
 	{
 		if(verify_type(argv[i]) == 2 || ((verify_type(argv[i]) == 3) && tab[2] == 'l' && argv[i][ft_strlen(argv[i]) - 1] != '/'))
@@ -69,12 +69,12 @@ t_dlist *get_files(int argc, char **argv)
 
 t_dlist *get_dirs(int argc, char **argv)
 {
-    int i = 1;
+    int i;
     t_dlist *dirs = NULL;
 	t_dlist *head1 = NULL;
 	char	*tab;
 
-	tab = get_flag_tab(argc, argv);
+	tab = get_flag_tab(argc, argv, &i);
     while(i < argc)
 	{
 		if(verify_type(argv[i]) == 1  || ((verify_type(argv[i]) == 3) && tab[2] != 'l') || ((verify_type(argv[i]) == 3) && tab[2] == 'l' && argv[i][ft_strlen(argv[i]) - 1] == '/'))
