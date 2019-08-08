@@ -67,24 +67,24 @@ int main(int argc, char **argv)
 {
 	t_dlist *files = NULL;
 	t_dlist *dirs = NULL;
-	t_dlist *tmp_file = NULL;
 	char	*tab;
 	int		i;
 
 	tab = get_flag_tab(argc, argv, &i);
-	printf("---> %d <--- ac = %d\n",i, argc);
-	exit(0);
-	files = get_files(argc, argv);
-	dirs = get_dirs(argc, argv);
-	tmp_file = files;
-	if (files)
-		display_files(files, tab);
-	if (dirs)
-		print_all(dirs, tab, tmp_file);
-	if (!tmp_file && !dirs)
+	if (argc - i == 0)
 	{
 		dirs = get_file(".");
 		print_all(dirs, tab, NULL);
 	}
+	else
+	{
+		files = get_files(i, argv, tab);
+		dirs = get_dirs(i, argv, tab);
+		if (files)
+			display_files(files, tab);
+		if (dirs)
+			print_all(dirs, tab, files);
+	}
+	
 	return (0);
 }

@@ -212,7 +212,7 @@ void    ft_l_flag(t_dlist *head, char *tab, int d)
 			else
 				nbr_space(sb.st_size, max.size);
 			current_time = time(&current_time);
-			if ((current_time - sb.st_mtime) < 15552000 && (current_time - sb.st_mtime) >= 0)
+			if ((current_time - sb.st_mtime) < MONTHS_6 && (current_time - sb.st_mtime) >= 0)
 				ft_putstr(ft_strsub(ctime(&sb.st_mtime), 3, 13));
 			else 
 			{

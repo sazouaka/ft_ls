@@ -12,18 +12,20 @@
 
 #ifndef FT_LS_H
 # define FT_LS_H
-#include <string.h>
-#include <stdio.h>
-#include <dirent.h>
-#include <sys/types.h>
-#include <time.h>
-#include <sys/stat.h>
-#include <errno.h>
-#include <sys/xattr.h>
-#include <sys/acl.h>
-#include "libft/libft.h"
+# include <string.h>
+# include <stdio.h>
+# include <dirent.h>
+# include <sys/types.h>
+# include <time.h>
+# include <sys/stat.h>
+# include <errno.h>
+# include <sys/xattr.h>
+# include <sys/acl.h>
+# include "libft/libft.h"
 
-#define MAX(m,n) (m > n) ? m : n
+# define MAX(m,n) (m > n) ? m : n
+# define MONTHS_6 15724800
+
 
 typedef struct  s_dlist
 {
@@ -59,8 +61,8 @@ t_dlist 	*ft_ls(DIR *dir, char a, char *str);
 
 
 // new functions
-t_dlist 	*get_files(int argc, char **argv);
-t_dlist 	*get_dirs(int argc, char **argv);
+t_dlist 	*get_files(int index, char **argv, char *tab);
+t_dlist 	*get_dirs(int argc, char **argv, char *tab);
 t_dlist 	*get_file(char *str);
 int 		verify_type(char *str);
 void    	display_files(t_dlist *files, char *tab);

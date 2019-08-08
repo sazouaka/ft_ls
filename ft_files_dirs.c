@@ -39,45 +39,53 @@ t_dlist *get_file(char *str)
 	file->next = NULL;
 	return(file);
 }
-t_dlist *get_files(int argc, char **argv)
+t_dlist *get_files(int index, char **argv, char *tab)
 {
-    int i;
     t_dlist *files = NULL;
 	t_dlist *head1 = NULL;
-	char	*tab;
+	int	t;
+	int l;
 
-	tab = get_flag_tab(argc, argv, &i);
-    while(i < argc)
+    while(argv[index])
 	{
-		if(verify_type(argv[i]) == 2 || ((verify_type(argv[i]) == 3) && tab[2] == 'l' && argv[i][ft_strlen(argv[i]) - 1] != '/'))
+		t = verify_type(argv[index]);
+		l = ft_strlen(argv[index]) - 1;
+		if (t == 0)
+		{
+			ft_putstr("./ft_ls: ");
+			ft_putstr(argv[index]);
+			ft_putstr(": No such file or directory\n");
+		}
+		if (t == 2 || (t == 3 && tab[2] == 'l' && argv[index][l] != '/'))
 		{
 			if(!files)
 			{
-				files = get_file(argv[i]);
+				files = get_file(argv[index]);
 				head1 = files;
 			}
 			else
 			{
-				files->next = get_file(argv[i]);
+				files->next = get_file(argv[index]);
 				files = files->next;
 			}
 		}
-        i++;
+        index++;
     }
     return (head1);
 }
 
-t_dlist *get_dirs(int argc, char **argv)
+t_dlist *get_dirs(int i, char **argv, char *tab)
 {
-    int i;
     t_dlist *dirs = NULL;
 	t_dlist *head1 = NULL;
-	char	*tab;
+	int t;
+	int l;
 
-	tab = get_flag_tab(argc, argv, &i);
-    while(i < argc)
+    while(argv[i])
 	{
-		if(verify_type(argv[i]) == 1  || ((verify_type(argv[i]) == 3) && tab[2] != 'l') || ((verify_type(argv[i]) == 3) && tab[2] == 'l' && argv[i][ft_strlen(argv[i]) - 1] == '/'))
+		t = verify_type(argv[i]);
+		l = ft_strlen(argv[i]) - 1;
+		if(t == 1  || ((t == 3) && tab[2] != 'l') || ((t == 3) && tab[2] == 'l' && argv[i][l] == '/'))
 		{
 			if(!dirs)
 			{
