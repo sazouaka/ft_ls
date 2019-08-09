@@ -47,9 +47,10 @@ void    ft_R_flag(t_dlist *head, char *tab)
                 sort_by_flag(head_R, tab[3], tab[4]);
                 ft_l_flag(head_R, tab, 1);
                 ft_R_flag(head_R, tab);
+                free_list(head_R);
+        
             }
         }
         node = node->next;
     }
-    free_list(head);
 }

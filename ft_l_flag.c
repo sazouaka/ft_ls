@@ -157,6 +157,7 @@ void    ft_l_flag(t_dlist *head, char *tab, int d)
 	struct  passwd  *pass;
 	struct  group   *grp;
 	char    buff[1024];
+	char	*tmp;
 	ssize_t	link;
 	int maj_min = 0;
 	time_t	current_time;
@@ -220,11 +221,19 @@ void    ft_l_flag(t_dlist *head, char *tab, int d)
 				nbr_space(sb.st_size, max.size);
 			current_time = time(&current_time);
 			if ((current_time - sb.st_mtime) < MONTHS_6 && (current_time - sb.st_mtime) >= 0)
-				ft_putstr(ft_strsub(ctime(&sb.st_mtime), 3, 13));
+			{
+				tmp = ft_strsub(ctime(&sb.st_mtime), 3, 13);
+				ft_putstr(tmp);
+				free(tmp);
+			}
 			else 
 			{
-				ft_putstr(ft_strsub(ctime(&sb.st_mtime), 3, 8));
-				ft_putstr(ft_strsub(ctime(&sb.st_mtime), 19, 5));
+				tmp = ft_strsub(ctime(&sb.st_mtime), 3, 8);
+				ft_putstr(tmp);
+				free(tmp);
+				tmp = ft_strsub(ctime(&sb.st_mtime), 19, 5);
+				ft_putstr(tmp);
+				free(tmp);
 			}
 			ft_putchar(' ');
 			ft_putstr(node->name);

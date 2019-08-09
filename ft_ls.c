@@ -24,7 +24,10 @@ t_dlist *ft_ls(DIR *dir, char a, char *str)
 	files = NULL;
 	char *t;
 	char *t2;
-	t = ft_strjoin(str, "/");    
+	if(ft_strcmp(str,"/") == 0)
+		t = str;
+	else
+		t = ft_strjoin(str, "/");    
 	while ((read = readdir(dir)))
 	{
 		if ((ft_char(read->d_name, '.')) == 1 && a != 'a')
@@ -48,27 +51,30 @@ t_dlist *ft_ls(DIR *dir, char a, char *str)
 	return (head);
 }
 
-void    display_files(t_dlist *files, char *tab)
+void    display_files(t_dlist *head, char *tab)
 {
 	t_dlist *file = NULL;
-	t_dlist *head = NULL;
+	t_dlist *new_head = NULL;
+	t_dlist *current;
 
-	while(files)
+	current = head;
+	while(current)
 	{
 	   if(!file)
 		{
-			file = get_one_file(files->name, files->name);
-			head = file;
+			file = get_one_file(current->name, current->name);
+			new_head = file;
 		}
 		else
 		{
-			file->next = get_one_file(files->name, files->name);
+			file->next = get_one_file(current->name, current->name);
 			file = file->next;
 		}
-		files = files->next;
+		current = current->next;
 	}
-	sort_by_flag(head, tab[3], tab[4]);
-	ft_l_flag(head, tab, 0);
+	sort_by_flag(new_head, tab[3], tab[4]);
+	ft_l_flag(new_head, tab, 0);
+	free_list(new_head);
 }
 
 void		free_list(t_dlist *head)
@@ -79,12 +85,35 @@ void		free_list(t_dlist *head)
 	current = head;
 	while(current)
 	{
+		
 		free(current->name);
-		// if (current->path_name)
-		// 	free(current->path_name);
+		// free(current);
+		// // if (current->path_name)
+		free(current->path_name);
+		tmp = current;
+		// printf("-------------------\n");
+		// printf("current:%p\nname:   %p\npath:   %p\n", current, &current->name, &current->path_name);
+		// printf("-------------------\n");
+		
+		current = current->next;
+		free(tmp);
+	}
+	
+}
+
+void		free_list2(t_dlist *head)
+{
+	t_dlist *current;
+	t_dlist *tmp;
+
+	current = head;
+	while(current)
+	{
+		
+		free(current->name);
 		tmp = current;
 		current = current->next;
-		//free(tmp);
+		free(tmp);
 	}
 	
 }
@@ -101,7 +130,7 @@ int main(int argc, char **argv)
 	{
 		dirs = get_file(".");
 		print_all(dirs, tab, NULL);
-	//	free_list(dirs);
+		free_list2(dirs);
 	}
 	else
 	{
@@ -110,13 +139,16 @@ int main(int argc, char **argv)
 		if (files)
 		{
 			display_files(files, tab);
-		//	free_list(files);
+			//free_list2(files);
+			
 		}		
 		if (dirs)
 		{
 			print_all(dirs, tab, files);
-			free_list(dirs);
+			free_list2(dirs);
 		}
+		if(files)
+			free_list2(files);
 	}
 	free(tab);
 	return (0);
