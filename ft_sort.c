@@ -31,10 +31,10 @@ void    ascii_sort(t_dlist *node)
             {
                 tmp = node->name;
                 t_ime = node->mtime;
-                path_name = ft_strdup(node->path_name);
+                path_name = node->path_name;
                 node->name = j->name;
                 node->mtime= j->mtime;
-                node->path_name = ft_strdup(j->path_name);
+                node->path_name = j->path_name;
                 j->name = tmp;
                 j->mtime = t_ime;
                 j->path_name = path_name;
@@ -62,12 +62,12 @@ void    ascii_sort_r(t_dlist *node)
         {
             if (ft_strcmp(node->name, j->name) < 0)
             {
-                name = ft_strdup(node->name);
+                name = node->name;
                 t_ime = node->mtime;
-                path_name = ft_strdup(node->path_name);
-                node->name = ft_strdup(j->name);
+                path_name = node->path_name;
+                node->name = j->name;
                 node->mtime= j->mtime;
-                node->path_name = ft_strdup(j->path_name);
+                node->path_name = j->path_name;
                 j->name = name;
                 j->mtime = t_ime;
                 j->path_name = path_name;
@@ -78,34 +78,6 @@ void    ascii_sort_r(t_dlist *node)
     }
 }
 
-int lexico(char *s1, char *s2)
-{
-    int tmp;
-    int i;
-    char *ss1;
-    char *ss2;
-
-    ss1 = ft_strdup(s1);
-    ss2 = ft_strdup(s2);
-    i = 0;
-    while(ss1[i])
-    {
-        if (ss1[i] >= 'A' && ss1[i] <= 'Z')
-            ss1[i] = ss1[i] + 32;
-        i++;
-    }
-    i = 0;
-    while(ss2[i])
-    {
-        if (ss2[i] >= 'A' && ss2[i] <= 'Z')
-            ss2[i] = ss2[i] + 32;
-        i++;
-    }
-    tmp = ft_strcmp(ss1, ss2);
-    free(ss1);
-    free(ss2);
-    return (tmp);
-}
 
 //************************//
 //Function to sort by time//
@@ -124,13 +96,13 @@ void    sort_time(t_dlist *node)
         {
             if (node->mtime < j->mtime)
             {
-                name = ft_strdup(node->name);
+                name = node->name;
                 t_ime = node->mtime;
-                path_name = ft_strdup(node->path_name);
+                path_name = node->path_name;
 
-                node->name = ft_strdup(j->name);
+                node->name = j->name;
                 node->mtime= j->mtime;
-                node->path_name = ft_strdup(j->path_name);
+                node->path_name = j->path_name;
 
                 j->name = name;
                 j->mtime = t_ime;
@@ -140,13 +112,13 @@ void    sort_time(t_dlist *node)
             {
                 if (ft_strcmp(node->name,j->name) > 0)
                 {
-                    name = ft_strdup(node->name);
+                    name = node->name;
                     t_ime = node->mtime;
-                    path_name = ft_strdup(node->path_name);
+                    path_name = node->path_name;
 
-                    node->name = ft_strdup(j->name);
+                    node->name = j->name;
                     node->mtime= j->mtime;
-                    node->path_name = ft_strdup(j->path_name);
+                    node->path_name = j->path_name;
 
                     j->name = name;
                     j->mtime = t_ime;
@@ -176,12 +148,12 @@ void    sort_r_time(t_dlist *node)
         {
             if (node->mtime > j->mtime)
             {
-                name = ft_strdup(node->name);
+                name = node->name;
                 t_ime = node->mtime;
-                path_name = ft_strdup(node->path_name);
-                node->name = ft_strdup(j->name);
+                path_name = node->path_name;
+                node->name = j->name;
                 node->mtime= j->mtime;
-                node->path_name = ft_strdup(j->path_name);
+                node->path_name = j->path_name;
                 j->name = name;
                 j->mtime = t_ime;
                 j->path_name = path_name;
@@ -190,13 +162,13 @@ void    sort_r_time(t_dlist *node)
             {
                 if (ft_strcmp(node->name,j->name) < 0)
                 {
-                    name = ft_strdup(node->name);
+                    name = node->name;
                     t_ime = node->mtime;
-                    path_name = ft_strdup(node->path_name);
+                    path_name = node->path_name;
 
-                    node->name = ft_strdup(j->name);
+                    node->name = j->name;
                     node->mtime= j->mtime;
-                    node->path_name = ft_strdup(j->path_name);
+                    node->path_name = j->path_name;
 
                     j->name = name;
                     j->mtime = t_ime;

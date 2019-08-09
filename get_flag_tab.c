@@ -67,8 +67,9 @@ char    *get_flag_tab(int ac, char **av, int *index)
             j = flag_search(av[i][z]);
             if (j == -1)
             {
-                printf("./ft_ls: illegal option -- %c\n", av[i][z]);
-                printf("usage: ./ft_ls [-Ralrt] [file ...]\n");
+                ft_putstr("./ft_ls: illegal option -- ");
+                ft_putchar(av[i][z]);
+                ft_putstr("\nusage: ./ft_ls [-Ralrt] [file ...]\n");
                 exit(1);
             }
             else

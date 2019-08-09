@@ -40,6 +40,8 @@ void	permission(char *str)
     	tab[10] = '+';
     else
     	tab[10] = ' ';
+	if(acl)
+		acl_free(acl);
 	if(lstat(str, &sb) == 0)
 	{
 		if (S_ISBLK(sb.st_mode))
@@ -73,6 +75,7 @@ void	permission(char *str)
 			(tab[9] == '-') ? (tab[9] = 'T') : (tab[9] = 't');
 		tab[11] = '\0';
 		ft_putstr(tab);
+		free(tab);
 	}
 }
 
@@ -99,9 +102,11 @@ int		nbr_len(long long n)
 void	nbr_space(long long link, int max)
 {
 	int i;
+	int l;
 
 	i = 0;
-	while (i < max - nbr_len(link) + 1)
+	l = max - nbr_len(link) + 1;
+	while (i < l)
 	{
 		ft_putchar(' ');
 		i++;
@@ -113,12 +118,13 @@ void	nbr_space(long long link, int max)
 void	uid_space(char *str, int max)
 {
 	int i;
+	int l;
 
 	i = 0;
-	
+	l = max - ft_strlen(str);	
 	ft_putchar(' ');
 	ft_putstr(str);
-	while (i < max - ft_strlen(str))
+	while (i < l)
 	{
 		ft_putchar(' ');
 		i++;
@@ -128,13 +134,14 @@ void	uid_space(char *str, int max)
 void	gid_space(char *str, int max)
 {
 	int i;
+	int l;
 
 	i = 0;
-	
+	l = max - ft_strlen(str) + 1;
 	ft_putchar(' ');
 	ft_putchar(' ');
 	ft_putstr(str);
-	while (i < max - ft_strlen(str) + 1)
+	while (i < l)
 	{
 		ft_putchar(' ');
 		i++;

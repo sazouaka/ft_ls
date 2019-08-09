@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "ft_ls.h"
+
 char *trim_path(char *str)
 {
     int i;
@@ -23,13 +24,6 @@ char *trim_path(char *str)
     return (str + i);
     
 }
-
-// void    print_dirs(t_dlist *dirs, DIR *d, char *tab, t_dlist *tmp_file)
-// {
-   
-
-    
-// }
 
 int    print_all(t_dlist  *dirs, char *tab, t_dlist  *tmp_file)
 {
@@ -58,19 +52,15 @@ int    print_all(t_dlist  *dirs, char *tab, t_dlist  *tmp_file)
             dirs = dirs->next;
             continue;
         }
-        //printf("--------------- 1 >>>>> heeere fucking error\n");
         head = ft_ls(d, tab[1], dirs->name);
         if (head)
         {
             ascii_sort(head);
             sort_by_flag(head, tab[3], tab[4]);
             ft_l_flag(head, tab, 1);
-            //printf("--------------- 2 >>>>> heeere fucking error\n");
             if (tab[0] == 'R')
-            {
-                //printf("--------------- 3 >>>>> heeere fucking error\n");
                 ft_R_flag(head, tab);
-            }
+            free_list(head);
         }
         dirs = dirs->next;
     }

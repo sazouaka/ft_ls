@@ -12,6 +12,7 @@
 
 #ifndef FT_LS_H
 # define FT_LS_H
+# include "libft/libft.h"
 # include <string.h>
 # include <stdio.h>
 # include <dirent.h>
@@ -21,7 +22,8 @@
 # include <errno.h>
 # include <sys/xattr.h>
 # include <sys/acl.h>
-# include "libft/libft.h"
+# include <pwd.h>
+# include <grp.h>
 
 # define MAX(m,n) (m > n) ? m : n
 # define MONTHS_6 15724800
@@ -70,5 +72,6 @@ void		permission(char *str);
 int			print_all(t_dlist  *dirs, char *tab, t_dlist  *tmp_file);
 void    	ft_R_flag(t_dlist *head, char *tab);
 char		*trim_path(char *str);
+void		free_list(t_dlist *head);
 
 #endif
