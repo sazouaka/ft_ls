@@ -12,9 +12,9 @@
 
 #include "ft_ls.h"
 
-//********************//
-//Function to get list//
-//********************//
+/*
+** Function to get list
+*/
 
 t_dlist *ft_ls(DIR *dir, char a, char *str)
 {

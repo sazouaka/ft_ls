@@ -15,7 +15,8 @@
 int verify_type(char *str)
 {
 	struct stat st;
-    if(lstat(str, &st) == 0)
+	int ret;
+    if((ret = lstat(str, &st)) == 0)
     {
         if(S_ISDIR(st.st_mode))
             return(1);
@@ -24,6 +25,8 @@ int verify_type(char *str)
 		if(S_ISLNK(st.st_mode))
 			return(3);
     }
+	if (ret == -1)
+		return(-1);
 	return(0);
 }
 t_dlist *get_file(char *str)
@@ -50,11 +53,10 @@ t_dlist *get_files(int index, char **argv, char *tab)
 	{
 		t = verify_type(argv[index]);
 		l = ft_strlen(argv[index]) - 1;
-		if (t == 0)
+		if (t == -1)
 		{
 			ft_putstr("./ft_ls: ");
-			ft_putstr(argv[index]);
-			ft_putstr(": No such file or directory\n");
+			perror(argv[index]);
 		}
 		if (t == 2 || (t == 3 && tab[2] == 'l' && argv[index][l] != '/'))
 		{

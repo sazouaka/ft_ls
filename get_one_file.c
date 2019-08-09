@@ -12,9 +12,6 @@
 
 #include "ft_ls.h"
 
-//****************************//
-//Function to get list element//
-//****************************//
 t_dlist *get_one_file(char *str, char *s2)
 {
     t_dlist *files;
