@@ -31,39 +31,37 @@ int		verify_type(char *str)
 	return (0);
 }
 
-t_dlist	*get_file(char *str)
+int		if_read_lnk2(char *str, char *tab)
 {
-	t_dlist		*file;
-	struct stat	st;
+	int t;
+	int l;
 
-	lstat(str, &st);
-	file = (t_dlist *)malloc(sizeof(t_dlist));
-	file->name = ft_strdup(str);
-	file->mtime = st.st_mtime;
-	file->path_name = file->name;
-	file->next = NULL;
-	return (file);
+	t = verify_type(str);
+	l = ft_strlen(str) - 1;
+	if (t == -1)
+	{
+		ft_putstr("./ft_ls: ");
+		perror(str);
+		return (0);
+	}
+	if (t == 2 || (t == 3 && tab[2] == 'l' && str[l] != '/'))
+		return (1);
+	else
+	{
+		return (0);
+	}
 }
 
 t_dlist	*get_files(int index, char **argv, char *tab)
 {
 	t_dlist	*files;
 	t_dlist	*head1;
-	int		t;
-	int		l;
 
 	files = NULL;
 	head1 = NULL;
 	while (argv[index])
 	{
-		t = verify_type(argv[index]);
-		l = ft_strlen(argv[index]) - 1;
-		if (t == -1)
-		{
-			ft_putstr("./ft_ls: ");
-			perror(argv[index]);
-		}
-		if (t == 2 || (t == 3 && tab[2] == 'l' && argv[index][l] != '/'))
+		if (if_read_lnk2(argv[index], tab))
 		{
 			if (!files)
 			{
@@ -81,21 +79,32 @@ t_dlist	*get_files(int index, char **argv, char *tab)
 	return (head1);
 }
 
+int		if_read_lnk(char *str, char *tab)
+{
+	int t;
+	int l;
+
+	t = verify_type(str);
+	l = ft_strlen(str) - 1;
+	if (t == 1 || ((t == 3) && tab[2] != 'l') ||
+		((t == 3) && tab[2] == 'l' && str[l] == '/'))
+		return (1);
+	else
+	{
+		return (0);
+	}
+}
+
 t_dlist	*get_dirs(int i, char **argv, char *tab)
 {
 	t_dlist	*dirs;
 	t_dlist	*head1;
-	int		t;
-	int		l;
 
 	dirs = NULL;
 	head1 = NULL;
 	while (argv[i])
 	{
-		t = verify_type(argv[i]);
-		l = ft_strlen(argv[i]) - 1;
-		if (t == 1 || ((t == 3) && tab[2] != 'l') || ((t == 3) &&
-			tab[2] == 'l' && argv[i][l] == '/'))
+		if (if_read_lnk(argv[i], tab))
 		{
 			if (!dirs)
 			{

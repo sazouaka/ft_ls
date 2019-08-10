@@ -25,3 +25,17 @@ t_dlist	*get_one_file(char *str, char *s2)
 	files->next = NULL;
 	return (files);
 }
+
+t_dlist	*get_file(char *str)
+{
+	t_dlist		*file;
+	struct stat	st;
+
+	lstat(str, &st);
+	file = (t_dlist *)malloc(sizeof(t_dlist));
+	file->name = ft_strdup(str);
+	file->mtime = st.st_mtime;
+	file->path_name = file->name;
+	file->next = NULL;
+	return (file);
+}
