@@ -12,16 +12,16 @@
 
 #include "ft_ls.h"
 
-t_dlist *get_one_file(char *str, char *s2)
+t_dlist	*get_one_file(char *str, char *s2)
 {
-    t_dlist *files;
-    struct stat st;
+	t_dlist		*files;
+	struct stat	st;
 
-    lstat(s2, &st);
-    files = (t_dlist *)malloc(sizeof(t_dlist));
-    files->mtime = st.st_mtime;
-    files->name = ft_strdup(str);
-    files->path_name = ft_strdup(s2);
-    files->next = NULL;
-    return (files);
+	lstat(s2, &st);
+	files = (t_dlist *)malloc(sizeof(t_dlist));
+	files->mtime = st.st_mtime;
+	files->name = ft_strdup(str);
+	files->path_name = ft_strdup(s2);
+	files->next = NULL;
+	return (files);
 }
