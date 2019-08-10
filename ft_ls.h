@@ -54,6 +54,7 @@ void				ascii_sort_r(t_dlist *node);
 void				sort_time(t_dlist *node);
 void				sort_r_time(t_dlist *node);
 void				sort_by_flag(t_dlist *head, char r, char t);
+void				ft_swap_sort(t_dlist *node, t_dlist *j);
 int					flag_search(char c);
 char				*get_flag_tab(int ac, char **av, int *index);
 void				print_list(t_dlist *head);
