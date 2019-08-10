@@ -25,6 +25,7 @@
 # include <pwd.h>
 # include <grp.h>
 
+# define FLAGS "Ralrt"
 # define MAX(m,n) (m > n) ? m : n
 # define MONTHS_6 15724800
 
