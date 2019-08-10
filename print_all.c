@@ -24,12 +24,6 @@ char	*trim_path(char *str)
 	return (str + i);
 }
 
-void	print_name(char *s)
-{
-	ft_putstr(s);
-	ft_putstr(":\n");
-}
-
 void	print_all_helper(t_dlist *dirs, char *tab)
 {
 	DIR		*d;
@@ -41,7 +35,7 @@ void	print_all_helper(t_dlist *dirs, char *tab)
 		ft_putstr("./ft_ls: ");
 		perror(trim_path(dirs->name));
 		dirs = dirs->next;
-		return;
+		return ;
 	}
 	head = ft_ls(d, tab[1], dirs->name);
 	if (head)
@@ -49,7 +43,7 @@ void	print_all_helper(t_dlist *dirs, char *tab)
 		ascii_sort(head);
 		sort_by_flag(head, tab[3], tab[4]);
 		ft_l_flag(head, tab, 1);
-		(tab[0] == 'R') ? ft_R_flag(head, tab) : 0;
+		(tab[0] == 'R') ? ft_recursive_flag(head, tab) : 0;
 		free_list(head);
 	}
 	dirs = dirs->next;
@@ -57,9 +51,7 @@ void	print_all_helper(t_dlist *dirs, char *tab)
 
 int		print_all(t_dlist *dirs, char *tab, t_dlist *tmp_file)
 {
-//	t_dlist	*head;
 	t_dlist	*tmp_dirs;
-//	DIR		*d;
 	int		i;
 
 	tmp_dirs = dirs;
@@ -68,25 +60,13 @@ int		print_all(t_dlist *dirs, char *tab, t_dlist *tmp_file)
 	while (dirs)
 	{
 		(i != 0 || tmp_file) ? ft_putchar('\n') : 0;
-		(tmp_file || tmp_dirs->next) ? print_name(dirs->name) : 0;
+		if (tmp_file || tmp_dirs->next)
+		{
+			ft_putstr(dirs->name);
+			ft_putstr(":\n");
+		}
 		i = 1;
 		print_all_helper(dirs, tab);
-		// if ((d = opendir(dirs->name)) == NULL)
-		// {
-		// 	ft_putstr("./ft_ls: ");
-		// 	perror(trim_path(dirs->path_name));
-		// 	dirs = dirs->next;
-		// 	continue;
-		// }
-		// head = ft_ls(d, tab[1], dirs->name);
-		// if (head)
-		// {
-		// 	ascii_sort(head);
-		// 	sort_by_flag(head, tab[3], tab[4]);
-		// 	ft_l_flag(head, tab, 1);
-		// 	(tab[0] == 'R') ? ft_R_flag(head, tab) : 0;
-		// 	free_list(head);
-		// }
 		dirs = dirs->next;
 	}
 	return (0);

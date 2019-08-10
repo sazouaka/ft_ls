@@ -12,37 +12,35 @@
 
 #include "ft_ls.h"
 
-//****************************//
-//Function to get ls -l result//
-//****************************//
 void	permission(char *str)
 {
-	char    *tab;
-	struct  stat sb;
-	acl_t acl = NULL;
-    acl_entry_t buff;
-    ssize_t xattr = 0;
+	char		*tab;
+	struct stat	sb;
+	acl_t		acl;
+	acl_entry_t	buff;
+	ssize_t		xattr;
 
+	xattr = 0;
+	acl = NULL;
 	tab = (char *)malloc(sizeof(char) * 12);
-
 	acl = acl_get_link_np(str, ACL_TYPE_EXTENDED);
-    if (acl && acl_get_entry(acl, ACL_FIRST_ENTRY, &buff) == -1) 
+	if (acl && acl_get_entry(acl, ACL_FIRST_ENTRY, &buff) == -1)
 	{
-        acl_free(acl);
-        acl = NULL;
-    }
-	xattr = listxattr(str, NULL, 0, XATTR_NOFOLLOW);
-    if (xattr < 0)
-        xattr = 0;
-    if (xattr > 0)
-    	tab[10] = '@';
-    else if (acl != NULL)
-    	tab[10] = '+';
-    else
-    	tab[10] = ' ';
-	if(acl)
 		acl_free(acl);
-	if(lstat(str, &sb) == 0)
+		acl = NULL;
+	}
+	xattr = listxattr(str, NULL, 0, XATTR_NOFOLLOW);
+	if (xattr < 0)
+		xattr = 0;
+	if (xattr > 0)
+		tab[10] = '@';
+	else if (acl != NULL)
+		tab[10] = '+';
+	else
+		tab[10] = ' ';
+	if (acl)
+		acl_free(acl);
+	if (lstat(str, &sb) == 0)
 	{
 		if (S_ISBLK(sb.st_mode))
 			tab[0] = 'b';
@@ -112,7 +110,6 @@ void	nbr_space(long long link, int max)
 		i++;
 	}
 	ft_putnbr(link);
-
 }
 
 void	uid_space(char *str, int max)
@@ -121,7 +118,7 @@ void	uid_space(char *str, int max)
 	int l;
 
 	i = 0;
-	l = max - ft_strlen(str);	
+	l = max - ft_strlen(str);
 	ft_putchar(' ');
 	ft_putstr(str);
 	while (i < l)
@@ -148,20 +145,21 @@ void	gid_space(char *str, int max)
 	}
 }
 
-void    ft_l_flag(t_dlist *head, char *tab, int d)
+void	ft_l_flag(t_dlist *head, char *tab, int d)
 {
-	t_dlist *node;
-	t_dlist *node2;
-	struct  stat sb;
-	t_max	max = {0,0,0,0,0,0};
-	struct  passwd  *pass;
-	struct  group   *grp;
-	char    buff[1024];
-	char	*tmp;
-	ssize_t	link;
-	int maj_min = 0;
-	time_t	current_time;
-	
+	t_dlist			*node;
+	t_dlist			*node2;
+	struct stat		sb;
+	t_max			max = {0,0,0,0,0,0};
+	struct passwd	*pass;
+	struct group	*grp;
+	char			buff[1024];
+	char			*tmp;
+	ssize_t			link;
+	int				maj_min;
+	time_t			current_time;
+
+	maj_min = 0;
 	if (tab[2] == 'l')
 	{
 		node2 = head;
@@ -175,7 +173,7 @@ void    ft_l_flag(t_dlist *head, char *tab, int d)
 		while (node)
 		{
 			lstat(node->path_name, &sb);
-			if(nbr_len((long long)sb.st_nlink) > max.nlink)
+			if (nbr_len((long long)sb.st_nlink) > max.nlink)
 				max.nlink = nbr_len((long long)sb.st_nlink);
 			if (ft_strlen((getpwuid(sb.st_uid)->pw_name)) > max.uid)
 				max.uid = ft_strlen((getpwuid(sb.st_uid)->pw_name));
@@ -213,20 +211,21 @@ void    ft_l_flag(t_dlist *head, char *tab, int d)
 			if (S_ISBLK(sb.st_mode) || S_ISCHR(sb.st_mode))
 			{
 				ft_putchar(' ');
-				nbr_space(major(sb.st_rdev) ,max.maj);
+				nbr_space(major(sb.st_rdev), max.maj);
 				ft_putchar(',');
-				nbr_space(minor(sb.st_rdev) ,max.min);
+				nbr_space(minor(sb.st_rdev), max.min);
 			}
 			else
 				nbr_space(sb.st_size, max.size);
 			current_time = time(&current_time);
-			if ((current_time - sb.st_mtime) < MONTHS_6 && (current_time - sb.st_mtime) >= 0)
+			if ((current_time - sb.st_mtime) < MONTHS_6 &&
+				(current_time - sb.st_mtime) >= 0)
 			{
 				tmp = ft_strsub(ctime(&sb.st_mtime), 3, 13);
 				ft_putstr(tmp);
 				free(tmp);
 			}
-			else 
+			else
 			{
 				tmp = ft_strsub(ctime(&sb.st_mtime), 3, 8);
 				ft_putstr(tmp);
@@ -247,8 +246,7 @@ void    ft_l_flag(t_dlist *head, char *tab, int d)
 			ft_putchar('\n');
 			node = node->next;
 		}
-		
 	}
-  	else
+	else
 		print_list(head);
 }

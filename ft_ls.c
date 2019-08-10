@@ -12,27 +12,25 @@
 
 #include "ft_ls.h"
 
-/*
-** Function to get list
-*/
-
-t_dlist *ft_ls(DIR *dir, char a, char *str)
+t_dlist	*ft_ls(DIR *dir, char a, char *str)
 {
-	struct dirent *read;
-	t_dlist *files;
-	t_dlist *head = NULL;
+	struct dirent	*read;
+	t_dlist			*files;
+	t_dlist			*head;
+	char			*t;
+	char			*t2;
+
 	files = NULL;
-	char *t;
-	char *t2;
-	if(ft_strcmp(str,"/") == 0)
+	head = NULL;
+	if (ft_strcmp(str, "/") == 0)
 		t = str;
 	else
-		t = ft_strjoin(str, "/");    
+		t = ft_strjoin(str, "/");
 	while ((read = readdir(dir)))
 	{
 		if ((ft_char(read->d_name, '.')) == 1 && a != 'a')
 			continue;
-		if(!files)
+		if (!files)
 		{
 			t2 = ft_strjoin(t, read->d_name);
 			files = get_one_file(read->d_name, t2);
@@ -41,7 +39,7 @@ t_dlist *ft_ls(DIR *dir, char a, char *str)
 		else
 		{
 			t2 = ft_strjoin(t, read->d_name);
-			files->next = get_one_file( read->d_name,t2);
+			files->next = get_one_file(read->d_name, t2);
 			files = files->next;
 		}
 		free(t2);
@@ -51,16 +49,18 @@ t_dlist *ft_ls(DIR *dir, char a, char *str)
 	return (head);
 }
 
-void    display_files(t_dlist *head, char *tab)
+void	display_files(t_dlist *head, char *tab)
 {
-	t_dlist *file = NULL;
-	t_dlist *new_head = NULL;
+	t_dlist *file;
+	t_dlist *new_head;
 	t_dlist *current;
 
 	current = head;
-	while(current)
+	new_head = NULL;
+	file = NULL;
+	while (current)
 	{
-	   if(!file)
+		if (!file)
 		{
 			file = get_one_file(current->name, current->name);
 			new_head = file;
@@ -77,54 +77,46 @@ void    display_files(t_dlist *head, char *tab)
 	free_list(new_head);
 }
 
-void		free_list(t_dlist *head)
+void	free_list(t_dlist *head)
 {
 	t_dlist *current;
 	t_dlist *tmp;
 
 	current = head;
-	while(current)
+	while (current)
 	{
-		
 		free(current->name);
-		// free(current);
-		// // if (current->path_name)
 		free(current->path_name);
 		tmp = current;
-		// printf("-------------------\n");
-		// printf("current:%p\nname:   %p\npath:   %p\n", current, &current->name, &current->path_name);
-		// printf("-------------------\n");
-		
 		current = current->next;
 		free(tmp);
 	}
-	
 }
 
-void		free_list2(t_dlist *head)
+void	free_list2(t_dlist *head)
 {
 	t_dlist *current;
 	t_dlist *tmp;
 
 	current = head;
-	while(current)
+	while (current)
 	{
-		
 		free(current->name);
 		tmp = current;
 		current = current->next;
 		free(tmp);
 	}
-	
 }
 
-int main(int argc, char **argv)
+int		main(int argc, char **argv)
 {
-	t_dlist *files = NULL;
-	t_dlist *dirs = NULL;
+	t_dlist *files;
+	t_dlist *dirs;
 	char	*tab;
 	int		i;
 
+	files = NULL;
+	dirs = NULL;
 	tab = get_flag_tab(argc, argv, &i);
 	if (argc - i == 0)
 	{
@@ -137,17 +129,13 @@ int main(int argc, char **argv)
 		files = get_files(i, argv, tab);
 		dirs = get_dirs(i, argv, tab);
 		if (files)
-		{
 			display_files(files, tab);
-			//free_list2(files);
-			
-		}		
 		if (dirs)
 		{
 			print_all(dirs, tab, files);
 			free_list2(dirs);
 		}
-		if(files)
+		if (files)
 			free_list2(files);
 	}
 	free(tab);

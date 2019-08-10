@@ -12,18 +12,17 @@
 
 #include "ft_ls.h"
 
-int ft_blocks(t_dlist *node)
+int	ft_blocks(t_dlist *node)
 {
-    unsigned long blks;
+	unsigned long	blks;
+	struct stat		sb;
 
-    blks = 0;
-    while (node != NULL)
+	blks = 0;
+	while (node != NULL)
 	{
-	    struct  stat sb;
-
 		lstat(node->path_name, &sb);
-        blks = sb.st_blocks + blks;
+		blks = sb.st_blocks + blks;
 		node = node->next;
 	}
-    return (blks);
+	return (blks);
 }

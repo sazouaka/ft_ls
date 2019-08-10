@@ -12,18 +12,15 @@
 
 #include "ft_ls.h"
 
-//**********************//
-//Function to print list//
-//**********************//
-void    print_list(t_dlist *head)
+void	print_list(t_dlist *head)
 {
-    t_dlist *node;
+	t_dlist *node;
 
-    node = head;
-    while(node)
-    {
-        ft_putstr(node->name);
-        ft_putchar('\n');
-        node = node->next;
-    }
+	node = head;
+	while (node)
+	{
+		ft_putstr(node->name);
+		ft_putchar('\n');
+		node = node->next;
+	}
 }
