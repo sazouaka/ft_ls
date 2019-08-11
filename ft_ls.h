@@ -71,5 +71,6 @@ int					print_all(t_dlist *dirs, char *tab, t_dlist *tmp_file);
 void				ft_recursive_flag(t_dlist *head, char *tab);
 char				*trim_path(char *str);
 void				free_list(t_dlist *head);
+void				free_list2(t_dlist *head);
 
 #endif

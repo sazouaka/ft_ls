@@ -83,35 +83,17 @@ void	display_files(t_dlist *head, char *tab)
 	free_list(new_head);
 }
 
-void	free_list(t_dlist *head)
+void	main_2(t_dlist *files, t_dlist *dirs, char *tab)
 {
-	t_dlist *current;
-	t_dlist *tmp;
-
-	current = head;
-	while (current)
+	if (files)
+		display_files(files, tab);
+	if (dirs)
 	{
-		free(current->name);
-		free(current->path_name);
-		tmp = current;
-		current = current->next;
-		free(tmp);
+		print_all(dirs, tab, files);
+		free_list2(dirs);
 	}
-}
-
-void	free_list2(t_dlist *head)
-{
-	t_dlist *current;
-	t_dlist *tmp;
-
-	current = head;
-	while (current)
-	{
-		free(current->name);
-		tmp = current;
-		current = current->next;
-		free(tmp);
-	}
+	if (files)
+		free_list2(files);
 }
 
 int		main(int argc, char **argv)
@@ -121,8 +103,6 @@ int		main(int argc, char **argv)
 	char	*tab;
 	int		i;
 
-	files = NULL;
-	dirs = NULL;
 	tab = get_flag_tab(argc, argv, &i);
 	if (argc - i == 0)
 	{
@@ -134,15 +114,7 @@ int		main(int argc, char **argv)
 	{
 		files = get_files(i, argv, tab);
 		dirs = get_dirs(i, argv, tab);
-		if (files)
-			display_files(files, tab);
-		if (dirs)
-		{
-			print_all(dirs, tab, files);
-			free_list2(dirs);
-		}
-		if (files)
-			free_list2(files);
+		main_2(files, dirs, tab);
 	}
 	free(tab);
 	return (0);
