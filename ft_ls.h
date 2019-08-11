@@ -27,6 +27,7 @@
 
 # define FLAGS "Ralrt"
 # define MAX(m,n) (m > n) ? m : n
+# define TAB(i,c) tab[i] = c 
 # define MONTHS_6 15724800
 
 typedef struct		s_dlist

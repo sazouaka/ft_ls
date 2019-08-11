@@ -56,21 +56,21 @@ void	permission(char *str)
 			tab[0] = '-';
 		if (S_ISSOCK(sb.st_mode))
 			tab[0] = 's';
-		(sb.st_mode & S_IRUSR) ? (tab[1] = 'r') : (tab[1] = '-');
-		(sb.st_mode & S_IWUSR) ? (tab[2] = 'w') : (tab[2] = '-');
-		(sb.st_mode & S_IXUSR) ? (tab[3] = 'x') : (tab[3] = '-');
-		(sb.st_mode & S_IRGRP) ? (tab[4] = 'r') : (tab[4] = '-');
-		(sb.st_mode & S_IWGRP) ? (tab[5] = 'w') : (tab[5] = '-');
-		(sb.st_mode & S_IXGRP) ? (tab[6] = 'x') : (tab[6] = '-');
-		(sb.st_mode & S_IROTH) ? (tab[7] = 'r') : (tab[7] = '-');
-		(sb.st_mode & S_IWOTH) ? (tab[8] = 'w') : (tab[8] = '-');
-		(sb.st_mode & S_IXOTH) ? (tab[9] = 'x') : (tab[9] = '-');
+		(sb.st_mode & S_IRUSR) ? (TAB(1, 'r')) : (TAB(1, '-'));
+		(sb.st_mode & S_IWUSR) ? (TAB(2, 'w')) : (TAB(2, '-'));
+		(sb.st_mode & S_IXUSR) ? (TAB(3, 'x')) : (TAB(3, '-'));
+		(sb.st_mode & S_IRGRP) ? (TAB(4, 'r')) : (TAB(4, '-'));
+		(sb.st_mode & S_IWGRP) ? (TAB(5, 'w')) : (TAB(5, '-'));
+		(sb.st_mode & S_IXGRP) ? (TAB(6, 'x')) : (TAB(6, '-'));
+		(sb.st_mode & S_IROTH) ? (TAB(7, 'r')) : (TAB(7, '-'));
+		(sb.st_mode & S_IWOTH) ? (TAB(8, 'w')) : (TAB(8, '-'));
+		(sb.st_mode & S_IXOTH) ? (TAB(9, 'x')) : (TAB(9, '-'));
 		if (sb.st_mode & S_ISUID)
-			(tab[3] == '-') ? (tab[3] = 'S') : (tab[3] = 's');
+			(tab[3] == '-') ? (TAB(3, 'S')) : (TAB(3, 's'));
 		if (sb.st_mode & S_ISGID)
-			(tab[6] == '-') ? (tab[6] = 'S') : (tab[6] = 's');
+			(tab[6] == '-') ? (TAB(6, 'S')) : (TAB(6, 's'));
 		if (sb.st_mode & S_ISVTX)
-			(tab[9] == '-') ? (tab[9] = 'T') : (tab[9] = 't');
+			(tab[9] == '-') ? (TAB(9, 'T')) : (TAB(9, 't'));
 		tab[11] = '\0';
 		ft_putstr(tab);
 		free(tab);
