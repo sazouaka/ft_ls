@@ -12,13 +12,31 @@
 
 #include "ft_ls.h"
 
+void	ft_ls2(t_dlist **head, t_dlist **files, char *t, char *d_name)
+{
+	char *t2;
+
+	if (!(*files))
+	{
+		t2 = ft_strjoin(t, d_name);
+		(*files) = get_one_file(d_name, t2);
+		*head = (*files);
+	}
+	else
+	{
+		t2 = ft_strjoin(t, d_name);
+		(*files)->next = get_one_file(d_name, t2);
+		(*files) = (*files)->next;
+	}
+	free(t2);
+}
+
 t_dlist	*ft_ls(DIR *dir, char a, char *str)
 {
 	struct dirent	*read;
 	t_dlist			*files;
 	t_dlist			*head;
 	char			*t;
-	char			*t2;
 
 	files = NULL;
 	head = NULL;
@@ -30,19 +48,7 @@ t_dlist	*ft_ls(DIR *dir, char a, char *str)
 	{
 		if ((ft_char(read->d_name, '.')) == 1 && a != 'a')
 			continue;
-		if (!files)
-		{
-			t2 = ft_strjoin(t, read->d_name);
-			files = get_one_file(read->d_name, t2);
-			head = files;
-		}
-		else
-		{
-			t2 = ft_strjoin(t, read->d_name);
-			files->next = get_one_file(read->d_name, t2);
-			files = files->next;
-		}
-		free(t2);
+		ft_ls2(&head, &files, t, read->d_name);
 	}
 	free(t);
 	closedir(dir);
