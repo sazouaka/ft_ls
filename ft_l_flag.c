@@ -12,7 +12,7 @@
 
 #include "ft_ls.h"
 
-void	permission(char *str)
+void		permission(char *str)
 {
 	char		*tab;
 	struct stat	sb;
@@ -77,7 +77,7 @@ void	permission(char *str)
 	}
 }
 
-int		nbr_len(long long n)
+int			nbr_len(long long n)
 {
 	int i;
 
@@ -97,7 +97,7 @@ int		nbr_len(long long n)
 	return (i);
 }
 
-void	nbr_space(long long link, int max)
+void		nbr_space(long long link, int max)
 {
 	int i;
 	int l;
@@ -112,7 +112,7 @@ void	nbr_space(long long link, int max)
 	ft_putnbr(link);
 }
 
-void	uid_space(char *str, int max)
+void		uid_space(char *str, int max)
 {
 	int i;
 	int l;
@@ -128,7 +128,7 @@ void	uid_space(char *str, int max)
 	}
 }
 
-void	gid_space(char *str, int max)
+void		gid_space(char *str, int max)
 {
 	int i;
 	int l;
@@ -152,7 +152,7 @@ void		print_total(long long total)
 	ft_putchar('\n');
 }
 
-void	max_total2(int maj_min, int d, int blks, t_max **max)
+void		max_total2(int maj_min, int d, int blks, t_max **max)
 {
 	((maj_min > -1) && d) ? print_total(blks) : 0;
 	if (maj_min)
@@ -191,17 +191,77 @@ long long	max_total(int d, t_dlist **head, t_max *max)
 	return (blks);
 }
 
-void	ft_l_flag(t_dlist *head, char *tab, int d)
+void		uid_gid(t_max *max, nlink_t nlink, uid_t uid, gid_t gid)
+{
+	struct passwd	*pass;
+	struct group	*grp;
+
+	nbr_space(nlink, max->nlink);
+	pass = getpwuid(uid);
+	grp = getgrgid(gid);
+	uid_space(pass->pw_name, max->uid);
+	gid_space(grp->gr_name, max->gid);
+}
+
+void	size_maj_min(t_max *max, mode_t mode, dev_t rdev, off_t size)
+{
+	if (S_ISBLK(mode) || S_ISCHR(mode))
+	{
+		ft_putchar(' ');
+		nbr_space(major(rdev), max->maj);
+		ft_putchar(',');
+		nbr_space(minor(rdev), max->min);
+	}
+	else
+		nbr_space(size, max->size);
+}
+
+void		mtime(time_t mtime, char *date)
+{
+	time_t	current_time;
+	char	*tmp;
+
+	current_time = time(&current_time);
+	if ((current_time - mtime) < MONTHS_6 &&
+		(current_time - mtime) >= 0)
+	{
+		tmp = ft_strsub(date, 3, 13);
+		ft_putstr(tmp);
+		free(tmp);
+	}
+	else
+	{
+		tmp = ft_strsub(date, 3, 8);
+		ft_putstr(tmp);
+		free(tmp);
+		tmp = ft_strsub(date, 19, 5);
+		ft_putstr(tmp);
+		free(tmp);
+	}
+}
+
+void		name_link(char *name, char *path, mode_t mode)
+{
+	char	buff[1024];
+	ssize_t	link;
+
+	ft_putchar(' ');
+	ft_putstr(name);
+	if (S_ISLNK(mode))
+	{
+		ft_putstr(" -> ");
+		link = readlink(path, buff, 1023);
+		buff[link] = '\0';
+		ft_putstr(buff);
+	}
+	ft_putchar('\n');
+}
+
+void		ft_l_flag(t_dlist *head, char *tab, int d)
 {
 	t_dlist			*node;
 	struct stat		sb;
 	t_max			max;
-	struct passwd	*pass;
-	struct group	*grp;
-	char			buff[1024];
-	char			*tmp;
-	ssize_t			link;
-	time_t			current_time;
 
 	if (tab[2] == 'l')
 	{
@@ -215,47 +275,10 @@ void	ft_l_flag(t_dlist *head, char *tab, int d)
 				continue;
 			}
 			permission(node->path_name);
-			nbr_space(sb.st_nlink, max.nlink);
-			pass = getpwuid(sb.st_uid);
-			grp = getgrgid(sb.st_gid);
-			uid_space(pass->pw_name, max.uid);
-			gid_space(grp->gr_name, max.gid);
-			if (S_ISBLK(sb.st_mode) || S_ISCHR(sb.st_mode))
-			{
-				ft_putchar(' ');
-				nbr_space(major(sb.st_rdev), max.maj);
-				ft_putchar(',');
-				nbr_space(minor(sb.st_rdev), max.min);
-			}
-			else
-				nbr_space(sb.st_size, max.size);
-			current_time = time(&current_time);
-			if ((current_time - sb.st_mtime) < MONTHS_6 &&
-				(current_time - sb.st_mtime) >= 0)
-			{
-				tmp = ft_strsub(ctime(&sb.st_mtime), 3, 13);
-				ft_putstr(tmp);
-				free(tmp);
-			}
-			else
-			{
-				tmp = ft_strsub(ctime(&sb.st_mtime), 3, 8);
-				ft_putstr(tmp);
-				free(tmp);
-				tmp = ft_strsub(ctime(&sb.st_mtime), 19, 5);
-				ft_putstr(tmp);
-				free(tmp);
-			}
-			ft_putchar(' ');
-			ft_putstr(node->name);
-			if (S_ISLNK(sb.st_mode))
-			{
-				ft_putstr(" -> ");
-				link = readlink(node->path_name, buff, 1023);
-				buff[link] = '\0';
-				ft_putstr(buff);
-			}
-			ft_putchar('\n');
+			uid_gid(&max, sb.st_nlink, sb.st_uid, sb.st_gid);
+			size_maj_min(&max, sb.st_mode, sb.st_rdev, sb.st_size);
+			mtime(sb.st_mtime, ctime(&sb.st_mtime));
+			name_link(node->name, node->path_name, sb.st_mode);
 			node = node->next;
 		}
 	}
