@@ -27,7 +27,9 @@
 
 # define FLAGS "Ralrt"
 # define MAX(m,n) (m > n) ? m : n
-# define TAB(i,c) tab[i] = c 
+# define TAB(i,c) tab[i] = c
+# define IF_ELS(test, var, i, o) (test) ? (var = i) : (var = o)
+# define INIT(a,b,c,d,e,f) a = b = c = d = e = f = 0
 # define MONTHS_6 15724800
 
 typedef struct		s_dlist
@@ -60,7 +62,7 @@ int					flag_search(char c);
 char				*get_flag_tab(int ac, char **av, int *index);
 void				print_list(t_dlist *head);
 void				ft_l_flag(t_dlist *head, char *tab, int d);
-int					ft_blocks(t_dlist *head);
+long long			ft_blocks(t_dlist *head);
 t_dlist				*ft_ls(DIR *dir, char a, char *str);
 t_dlist				*get_files(int index, char **argv, char *tab);
 t_dlist				*get_dirs(int argc, char **argv, char *tab);

@@ -145,50 +145,67 @@ void	gid_space(char *str, int max)
 	}
 }
 
+void		print_total(long long total)
+{
+	ft_putstr("total ");
+	ft_putnbr(total);
+	ft_putchar('\n');
+}
+
+void	max_total2(int maj_min, int d, int blks, t_max **max)
+{
+	((maj_min > -1) && d) ? print_total(blks) : 0;
+	if (maj_min)
+	{
+		(*max)->maj = MAX((*max)->maj, (*max)->size - (*max)->min - 3);
+		(*max)->size = MAX((*max)->size, (*max)->min + (*max)->maj + 3);
+	}
+}
+
+long long	max_total(int d, t_dlist **head, t_max *max)
+{
+	t_dlist			*node;
+	struct stat		sb;
+	long long		blks;
+	int				m;
+
+	INIT(max->nlink, max->uid, max->gid, max->size, max->min, max->maj);
+	node = *head;
+	m = -1;
+	while (node)
+	{
+		if (lstat((node)->path_name, &sb) == 0 && !(blks = 0))
+		{
+			max->nlink = MAX(nbr_len((long long)sb.st_nlink), max->nlink);
+			max->uid = MAX(ft_strlen((getpwuid(sb.st_uid)->pw_name)), max->uid);
+			max->gid = MAX(ft_strlen((getgrgid(sb.st_gid)->gr_name)), max->gid);
+			max->size = MAX(nbr_len((long long)sb.st_size), max->size);
+			max->min = MAX(nbr_len((long long)minor(sb.st_rdev)), max->min);
+			max->maj = MAX(nbr_len((long long)major(sb.st_rdev)), max->maj);
+			IF_ELS(S_ISBLK(sb.st_mode) || S_ISCHR(sb.st_mode), m, 1, MAX(m, 0));
+			blks = sb.st_blocks + blks;
+		}
+		node = node->next;
+	}
+	max_total2(m, d, blks, &max);
+	return (blks);
+}
+
 void	ft_l_flag(t_dlist *head, char *tab, int d)
 {
 	t_dlist			*node;
-	t_dlist			*node2;
 	struct stat		sb;
-	t_max			max = {0,0,0,0,0,0};
+	t_max			max;
 	struct passwd	*pass;
 	struct group	*grp;
 	char			buff[1024];
 	char			*tmp;
 	ssize_t			link;
-	int				maj_min;
 	time_t			current_time;
 
-	maj_min = 0;
 	if (tab[2] == 'l')
 	{
-		node2 = head;
-		if (d && lstat(node2->path_name, &sb) == 0)
-		{
-			ft_putstr("total ");
-			ft_putnbr(ft_blocks(node2));
-			ft_putchar('\n');
-		}
-		node = head;
-		while (node)
-		{
-			lstat(node->path_name, &sb);
-			if (nbr_len((long long)sb.st_nlink) > max.nlink)
-				max.nlink = nbr_len((long long)sb.st_nlink);
-			if (ft_strlen((getpwuid(sb.st_uid)->pw_name)) > max.uid)
-				max.uid = ft_strlen((getpwuid(sb.st_uid)->pw_name));
-			if (ft_strlen((getgrgid(sb.st_gid)->gr_name)) > max.gid)
-				max.gid = ft_strlen((getgrgid(sb.st_gid)->gr_name));
-			if (nbr_len((long long)sb.st_size) > max.size)
-				max.size = nbr_len((long long)sb.st_size);
-			if (nbr_len((long long)minor(sb.st_rdev)) > max.min)
-				max.min = nbr_len((long long)minor(sb.st_rdev));
-			if (nbr_len((long long)major(sb.st_rdev)) > max.maj)
-				max.maj = nbr_len((long long)major(sb.st_rdev));
-			if (S_ISBLK(sb.st_mode) || S_ISCHR(sb.st_mode))
-				maj_min = 1;
-			node = node->next;
-		}
+		max_total(d, &head, &max);
 		node = head;
 		while (node)
 		{
@@ -203,11 +220,6 @@ void	ft_l_flag(t_dlist *head, char *tab, int d)
 			grp = getgrgid(sb.st_gid);
 			uid_space(pass->pw_name, max.uid);
 			gid_space(grp->gr_name, max.gid);
-			if (maj_min)
-			{
-				max.maj = MAX(max.maj, max.size - max.min - 3);
-				max.size = MAX(max.size, max.min + max.maj + 3);
-			}
 			if (S_ISBLK(sb.st_mode) || S_ISCHR(sb.st_mode))
 			{
 				ft_putchar(' ');

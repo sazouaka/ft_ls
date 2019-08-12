@@ -12,7 +12,7 @@
 
 #include "ft_ls.h"
 
-int	ft_blocks(t_dlist *node)
+long long	ft_blocks(t_dlist *node)
 {
 	unsigned long	blks;
 	struct stat		sb;
