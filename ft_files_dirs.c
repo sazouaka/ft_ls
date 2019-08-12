@@ -24,7 +24,7 @@ int		verify_type(char *str)
 		if (S_ISLNK(st.st_mode))
 			return (3);
 		else
-			return (2);		
+			return (2);
 	}
 	if (ret == -1)
 		return (-1);

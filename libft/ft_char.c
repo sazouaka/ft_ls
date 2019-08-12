@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   find_char.c                                       :+:      :+:    :+:   */
+/*   find_char.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sazouaka <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,14 +12,14 @@
 
 #include "libft.h"
 
-int ft_char(char *s, char c)
+int	ft_char(char *s, char c)
 {
-    int i;
+	int i;
 
-    i = 0;
-    if (s[0] == c)
-    {
-        return(1);
-    }
-    return(0);
+	i = 0;
+	if (s[0] == c)
+	{
+		return (1);
+	}
+	return (0);
 }
