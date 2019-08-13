@@ -52,7 +52,7 @@ void		print_total(long long total)
 	ft_putchar('\n');
 }
 
-void		max_total2(int maj_min, int d, int blks, t_max **max)
+void		max_total2(int maj_min, int d, long long blks, t_max **max)
 {
 	((maj_min > -1) && d) ? print_total(blks) : 0;
 	if (maj_min)
@@ -72,9 +72,10 @@ long long	max_total(int d, t_dlist **head, t_max *max)
 	INIT(max->nlink, max->uid, max->gid, max->size, max->min, max->maj);
 	node = *head;
 	m = -1;
+	blks = ft_blocks(node);
 	while (node)
 	{
-		if (lstat((node)->path_name, &sb) == 0 && !(blks = 0))
+		if (lstat((node)->path_name, &sb) == 0)
 		{
 			max->nlink = MAX(nbr_len((long long)sb.st_nlink), max->nlink);
 			max->uid = MAX(ft_strlen((getpwuid(sb.st_uid)->pw_name)), max->uid);
@@ -83,7 +84,6 @@ long long	max_total(int d, t_dlist **head, t_max *max)
 			max->min = MAX(nbr_len((long long)minor(sb.st_rdev)), max->min);
 			max->maj = MAX(nbr_len((long long)major(sb.st_rdev)), max->maj);
 			IF_ELS(S_ISBLK(sb.st_mode) || S_ISCHR(sb.st_mode), m, 1, MAX(m, 0));
-			blks = sb.st_blocks + blks;
 		}
 		node = node->next;
 	}

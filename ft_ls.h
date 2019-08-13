@@ -78,7 +78,7 @@ void				free_list2(t_dlist *head);
 void				uid_space(char *str, int max);
 void				gid_space(char *str, int max);
 void				print_total(long long total);
-void				max_total2(int maj_min, int d, int blks, t_max **max);
+void				max_total2(int maj_min, int d, long long blks, t_max **max);
 long long			max_total(int d, t_dlist **head, t_max *max);
 char				acl_attr(char *str);
 char				file_type(mode_t mode);
