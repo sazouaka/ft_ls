@@ -48,16 +48,16 @@ void		mtime(time_t mtime, char *date)
 	{
 		tmp = ft_strsub(date, 3, 13);
 		ft_putstr(tmp);
-		free(tmp);
+		IFREE(tmp);
 	}
 	else
 	{
 		tmp = ft_strsub(date, 3, 8);
 		ft_putstr(tmp);
-		free(tmp);
+		IFREE(tmp);
 		tmp = ft_strsub(date, 19, 5);
 		ft_putstr(tmp);
-		free(tmp);
+		IFREE(tmp);
 	}
 }
 

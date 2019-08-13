@@ -27,6 +27,7 @@
 
 # define FLAGS "Ralrt"
 # define MAX(m,n) (m > n) ? m : n
+# define IFREE(m) (m != NULL) ? (free(m), (m = NULL)) : 0
 # define TAB(i,c) tab[i] = c
 # define IF_ELS(test, var, i, o) (test) ? (var = i) : (var = o)
 # define INIT(a,b,c,d,e,f) a = b = c = d = e = f = 0

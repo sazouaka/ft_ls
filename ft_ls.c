@@ -28,7 +28,7 @@ void	ft_ls2(t_dlist **head, t_dlist **files, char *t, char *d_name)
 		(*files)->next = get_one_file(d_name, t2);
 		(*files) = (*files)->next;
 	}
-	free(t2);
+	IFREE(t2);
 }
 
 t_dlist	*ft_ls(DIR *dir, char a, char *str)
@@ -50,7 +50,7 @@ t_dlist	*ft_ls(DIR *dir, char a, char *str)
 			continue;
 		ft_ls2(&head, &files, t, read->d_name);
 	}
-	free(t);
+	IFREE(t);
 	closedir(dir);
 	return (head);
 }
@@ -116,6 +116,6 @@ int		main(int argc, char **argv)
 		dirs = get_dirs(i, argv, tab);
 		main_2(files, dirs, tab, argc - i);
 	}
-	free(tab);
+	IFREE(tab);
 	return (0);
 }

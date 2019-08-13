@@ -82,7 +82,7 @@ void		permission(char *str, mode_t mode)
 	tab[10] = acl_attr(str);
 	tab[11] = '\0';
 	ft_putstr(tab);
-	free(tab);
+	IFREE(tab);
 }
 
 int			nbr_len(long long n)

@@ -20,11 +20,11 @@ void	free_list(t_dlist *head)
 	current = head;
 	while (current)
 	{
-		free(current->name);
-		free(current->path_name);
+		IFREE(current->name);
+		IFREE(current->path_name);
 		tmp = current;
 		current = current->next;
-		free(tmp);
+		IFREE(tmp);
 	}
 }
 
@@ -36,9 +36,9 @@ void	free_list2(t_dlist *head)
 	current = head;
 	while (current)
 	{
-		free(current->name);
+		IFREE(current->name);
 		tmp = current;
 		current = current->next;
-		free(tmp);
+		IFREE(tmp);
 	}
 }
