@@ -49,7 +49,7 @@ void	print_all_helper(t_dlist *dirs, char *tab)
 	dirs = dirs->next;
 }
 
-int		print_all(t_dlist *dirs, char *tab, t_dlist *tmp_file)
+int		print_all(t_dlist *dirs, char *tab, t_dlist *tmp_file, int n_av)
 {
 	t_dlist	*tmp_dirs;
 	int		i;
@@ -60,7 +60,7 @@ int		print_all(t_dlist *dirs, char *tab, t_dlist *tmp_file)
 	while (dirs)
 	{
 		(i != 0 || tmp_file) ? ft_putchar('\n') : 0;
-		if (tmp_file || tmp_dirs->next)
+		if (n_av > 1 || tmp_file || tmp_dirs->next)
 		{
 			ft_putstr(dirs->name);
 			ft_putstr(":\n");

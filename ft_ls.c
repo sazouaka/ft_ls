@@ -83,13 +83,13 @@ void	display_files(t_dlist *head, char *tab)
 	free_list(new_head);
 }
 
-void	main_2(t_dlist *files, t_dlist *dirs, char *tab)
+void	main_2(t_dlist *files, t_dlist *dirs, char *tab, int n_av)
 {
 	if (files)
 		display_files(files, tab);
 	if (dirs)
 	{
-		print_all(dirs, tab, files);
+		print_all(dirs, tab, files, n_av);
 		free_list2(dirs);
 	}
 	if (files)
@@ -107,14 +107,14 @@ int		main(int argc, char **argv)
 	if (argc - i == 0)
 	{
 		dirs = get_file(".");
-		print_all(dirs, tab, NULL);
+		print_all(dirs, tab, NULL, 0);
 		free_list2(dirs);
 	}
 	else
 	{
 		files = get_files(i, argv, tab);
 		dirs = get_dirs(i, argv, tab);
-		main_2(files, dirs, tab);
+		main_2(files, dirs, tab, argc - i);
 	}
 	free(tab);
 	return (0);

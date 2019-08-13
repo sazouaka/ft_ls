@@ -70,7 +70,7 @@ t_dlist				*get_file(char *str);
 int					verify_type(char *str);
 void				display_files(t_dlist *files, char *tab);
 void				permission(char *str, mode_t mode);
-int					print_all(t_dlist *dirs, char *tab, t_dlist *tmp_file);
+int					print_all(t_dlist *dirs, char *tab, t_dlist *tmp, int n_av);
 void				ft_recursive_flag(t_dlist *head, char *tab);
 char				*trim_path(char *str);
 void				free_list(t_dlist *head);
