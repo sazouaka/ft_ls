@@ -25,7 +25,7 @@
 # include <pwd.h>
 # include <grp.h>
 
-# define FLAGS "Ralrt"
+# define FLAGS "Ralrtg"
 # define MAX(m,n) (m > n) ? m : n
 # define IFREE(m) (m != NULL) ? (free(m), (m = NULL)) : 0
 # define TAB(i,c) tab[i] = c
@@ -70,20 +70,20 @@ t_dlist				*get_dirs(int argc, char **argv, char *tab);
 t_dlist				*get_file(char *str);
 int					verify_type(char *str);
 void				display_files(t_dlist *files, char *tab);
-void				permission(char *str, mode_t mode);
+void				permission(char *str, mode_t mode, nlink_t nlink,
+					t_max *max);
 int					print_all(t_dlist *dirs, char *tab, t_dlist *tmp, int n_av);
 void				ft_recursive_flag(t_dlist *head, char *tab);
 char				*trim_path(char *str);
 void				free_list(t_dlist *head);
 void				free_list2(t_dlist *head);
 void				uid_space(char *str, int max);
-void				gid_space(char *str, int max);
+void				gid_space(char *str, int max, char c);
 void				print_total(long long total);
 void				max_total2(int maj_min, int d, long long blks, t_max **max);
 long long			max_total(int d, t_dlist **head, t_max *max);
 char				acl_attr(char *str);
 char				file_type(mode_t mode);
-void				permission(char *str, mode_t mode);
 int					nbr_len(long long n);
 void				nbr_space(long long link, int max);
 

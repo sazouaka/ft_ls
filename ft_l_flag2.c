@@ -58,7 +58,7 @@ char		file_type(mode_t mode)
 	return ('?');
 }
 
-void		permission(char *str, mode_t mode)
+void		permission(char *str, mode_t mode, nlink_t nlink, t_max *max)
 {
 	char		*tab;
 
@@ -83,6 +83,7 @@ void		permission(char *str, mode_t mode)
 	tab[11] = '\0';
 	ft_putstr(tab);
 	IFREE(tab);
+	nbr_space(nlink, max->nlink);
 }
 
 int			nbr_len(long long n)

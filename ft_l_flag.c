@@ -12,16 +12,16 @@
 
 #include "ft_ls.h"
 
-void		uid_gid(t_max *max, nlink_t nlink, uid_t uid, gid_t gid)
+void		uid_gid(t_max *max, char *tab, uid_t uid, gid_t gid)
 {
 	struct passwd	*pass;
 	struct group	*grp;
 
-	nbr_space(nlink, max->nlink);
 	pass = getpwuid(uid);
 	grp = getgrgid(gid);
-	uid_space(pass->pw_name, max->uid);
-	gid_space(grp->gr_name, max->gid);
+	if (tab[5] != 'g')
+		uid_space(pass->pw_name, max->uid);
+	gid_space(grp->gr_name, max->gid, tab[5]);
 }
 
 void		size_maj_min(t_max *max, mode_t mode, dev_t rdev, off_t size)
@@ -84,7 +84,7 @@ void		ft_l_flag(t_dlist *head, char *tab, int d)
 	struct stat		sb;
 	t_max			max;
 
-	if (tab[2] == 'l')
+	if (tab[2] == 'l' || tab[5] == 'g')
 	{
 		max_total(d, &head, &max);
 		node = head;
@@ -95,8 +95,8 @@ void		ft_l_flag(t_dlist *head, char *tab, int d)
 				node = node->next;
 				continue;
 			}
-			permission(node->path_name, sb.st_mode);
-			uid_gid(&max, sb.st_nlink, sb.st_uid, sb.st_gid);
+			permission(node->path_name, sb.st_mode, sb.st_nlink, &max);
+			uid_gid(&max, tab, sb.st_uid, sb.st_gid);
 			size_maj_min(&max, sb.st_mode, sb.st_rdev, sb.st_size);
 			mtime(sb.st_mtime, ctime(&sb.st_mtime));
 			name_link(node->name, node->path_name, sb.st_mode);

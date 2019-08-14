@@ -28,14 +28,15 @@ void		uid_space(char *str, int max)
 	}
 }
 
-void		gid_space(char *str, int max)
+void		gid_space(char *str, int max, char c)
 {
 	int i;
 	int l;
 
 	i = 0;
 	l = max - ft_strlen(str) + 1;
-	ft_putchar(' ');
+	if (c != 'g')
+		ft_putchar(' ');
 	ft_putchar(' ');
 	ft_putstr(str);
 	while (i < l)
