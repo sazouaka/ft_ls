@@ -17,25 +17,27 @@ char		acl_attr(char *str)
 	acl_t		acl;
 	acl_entry_t	buff;
 	ssize_t		xattr;
+	int			i;
 
 	xattr = 0;
 	acl = NULL;
+	i = 0;
 	acl = acl_get_link_np(str, ACL_TYPE_EXTENDED);
 	if (acl && acl_get_entry(acl, ACL_FIRST_ENTRY, &buff) == -1)
 	{
 		acl_free(acl);
 		acl = NULL;
 	}
-	xattr = listxattr(str, NULL, 0, XATTR_NOFOLLOW);
-	if (xattr < 0)
-		xattr = 0;
-	if (xattr > 0)
-		return ('@');
-	else if (acl != NULL)
+	if (acl != NULL)
 	{
 		acl_free(acl);
-		return ('+');
+		i = 1;
 	}
+	xattr = listxattr(str, NULL, 0, XATTR_NOFOLLOW);
+	if (xattr > 0)
+		return ('@');
+	else if (i)
+		return ('+');
 	return (' ');
 }
 

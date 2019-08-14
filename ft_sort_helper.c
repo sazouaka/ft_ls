@@ -53,7 +53,7 @@ void	ft_sort_args(char **av, int index)
 	}
 	if (ft_strcmp(av[index], "") == 0)
 	{
-		ft_putstr("./ft_ls: fts_open: No such file or directory\n");
+		write(2, "./ft_ls: fts_open: No such file or directory\n", 45);
 		exit(0);
 	}
 }
