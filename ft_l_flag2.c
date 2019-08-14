@@ -32,11 +32,11 @@ char		acl_attr(char *str)
 	if (xattr > 0)
 		return ('@');
 	else if (acl != NULL)
-		return ('+');
-	else
-		return (' ');
-	if (acl)
+	{
 		acl_free(acl);
+		return ('+');
+	}
+	return (' ');
 }
 
 char		file_type(mode_t mode)

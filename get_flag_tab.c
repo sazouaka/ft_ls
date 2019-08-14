@@ -61,9 +61,9 @@ char	*get_flag_tab(int ac, char **av, int *index)
 	int		i;
 	char	*tab;
 
-	tab = (char *)malloc(sizeof(char) * 6);
+	tab = (char *)malloc(sizeof(char) * ft_strlen(FLAGS));
 	i = 0;
-	while (i < 6)
+	while (i < ft_strlen(FLAGS))
 		tab[i++] = '0';
 	i = 1;
 	while (i < ac && av[i][0] == '-' && av[i][1] != '\0')

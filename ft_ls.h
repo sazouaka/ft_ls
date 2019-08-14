@@ -25,13 +25,32 @@
 # include <pwd.h>
 # include <grp.h>
 
-# define FLAGS "Ralrtg"
+# define FLAGS "RalrtgG"
 # define MAX(m,n) (m > n) ? m : n
 # define IFREE(m) (m != NULL) ? (free(m), (m = NULL)) : 0
 # define TAB(i,c) tab[i] = c
 # define IF_ELS(test, var, i, o) (test) ? (var = i) : (var = o)
 # define INIT(a,b,c,d,e,f) a = b = c = d = e = f = 0
 # define MONTHS_6 15724800
+# define F_BLK  "\x1b[30m"
+# define F_NRM  "\x1b[39m"
+# define F_RED  "\x1B[31m"
+# define F_GRN  "\x1B[32m"
+# define F_YEL  "\x1B[33m"
+# define F_BLU  "\x1B[34m"
+# define F_MAG  "\x1B[35m"
+# define F_CYN  "\x1B[36m"
+# define F_WHT  "\x1B[37m"
+
+# define B_BLK  "\x1b[40m"
+# define B_NRM  "\x1b[49m"
+# define B_RED  "\x1b[41m"
+# define B_GRN  "\x1b[42m"
+# define B_YEL  "\x1b[43m"
+# define B_BLU  "\x1b[44m"
+# define B_MAG  "\x1b[45m"
+# define B_CYN  "\x1b[46m"
+# define B_WHT  "\x1b[47m"
 
 typedef struct		s_dlist
 {
@@ -61,7 +80,7 @@ void				sort_by_flag(t_dlist *head, char r, char t);
 void				ft_swap_sort(t_dlist *node, t_dlist *j);
 int					flag_search(char c);
 char				*get_flag_tab(int ac, char **av, int *index);
-void				print_list(t_dlist *head);
+void				print_list(t_dlist *head, char c);
 void				ft_l_flag(t_dlist *head, char *tab, int d);
 long long			ft_blocks(t_dlist *head);
 t_dlist				*ft_ls(DIR *dir, char a, char *str);
@@ -86,5 +105,6 @@ char				acl_attr(char *str);
 char				file_type(mode_t mode);
 int					nbr_len(long long n);
 void				nbr_space(long long link, int max);
+void				ft_putstr_clr(char *s, mode_t mode);
 
 #endif

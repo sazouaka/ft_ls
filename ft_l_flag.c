@@ -61,13 +61,16 @@ void		mtime(time_t mtime, char *date)
 	}
 }
 
-void		name_link(char *name, char *path, mode_t mode)
+void		name_link(char *name, char *path, mode_t mode, char c)
 {
 	char	buff[1024];
 	ssize_t	link;
 
 	ft_putchar(' ');
-	ft_putstr(name);
+	if (c == 'G')
+		ft_putstr_clr(name, mode);
+	else
+		ft_putstr(name);
 	if (S_ISLNK(mode))
 	{
 		ft_putstr(" -> ");
@@ -99,10 +102,10 @@ void		ft_l_flag(t_dlist *head, char *tab, int d)
 			uid_gid(&max, tab, sb.st_uid, sb.st_gid);
 			size_maj_min(&max, sb.st_mode, sb.st_rdev, sb.st_size);
 			mtime(sb.st_mtime, ctime(&sb.st_mtime));
-			name_link(node->name, node->path_name, sb.st_mode);
+			name_link(node->name, node->path_name, sb.st_mode, tab[6]);
 			node = node->next;
 		}
 	}
 	else
-		print_list(head);
+		print_list(head, tab[6]);
 }

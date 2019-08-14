@@ -41,7 +41,7 @@ t_dlist	*ft_ls(DIR *dir, char a, char *str)
 	files = NULL;
 	head = NULL;
 	if (ft_strcmp(str, "/") == 0)
-		t = str;
+		t = ft_strdup(str);
 	else
 		t = ft_strjoin(str, "/");
 	while ((read = readdir(dir)))
