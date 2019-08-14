@@ -106,5 +106,6 @@ char				file_type(mode_t mode);
 int					nbr_len(long long n);
 void				nbr_space(long long link, int max);
 void				ft_putstr_clr(char *s, mode_t mode);
+void				ft_sort_args(char **av, int i);
 
 #endif

@@ -24,7 +24,8 @@ char	*get_f_color(mode_t mode)
 		return (F_MAG);
 	if (S_ISSOCK(mode))
 		return (F_GRN);
-	if (((mode & S_IXUSR) || (mode & S_IXGRP) || (mode & S_IXOTH)) && (!S_ISDIR(mode)))
+	if (((mode & S_IXUSR) || (mode & S_IXGRP) ||
+		(mode & S_IXOTH)) && (!S_ISDIR(mode)))
 		return (F_RED);
 	if ((mode & S_IXUSR) && (mode & S_ISUID))
 		return (F_BLK);
@@ -59,7 +60,7 @@ char	*get_b_color(mode_t mode)
 	return (B_NRM);
 }
 
-void    ft_putstr_clr(char *s, mode_t mode)
+void	ft_putstr_clr(char *s, mode_t mode)
 {
 	char	*f_color;
 	char	*b_color;

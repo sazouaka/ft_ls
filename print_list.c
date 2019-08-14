@@ -14,7 +14,7 @@
 
 void	print_list(t_dlist *head, char c)
 {
-	t_dlist 	*node;
+	t_dlist		*node;
 	struct stat	sb;
 
 	node = head;

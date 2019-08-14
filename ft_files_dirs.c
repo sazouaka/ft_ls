@@ -59,6 +59,7 @@ t_dlist	*get_files(int index, char **argv, char *tab)
 
 	files = NULL;
 	head1 = NULL;
+	ft_sort_args(argv, index);
 	while (argv[index])
 	{
 		if (if_read_lnk2(argv[index], tab))
