@@ -32,7 +32,7 @@ void	print_all_helper(t_dlist *dirs, char *tab)
 	d = opendir(dirs->name);
 	if (d == NULL)
 	{
-		write(2, "./ft_ls: ", 9);
+		ft_putstr_error("./ft_ls: ");
 		perror(trim_path(dirs->name));
 		dirs = dirs->next;
 		return ;

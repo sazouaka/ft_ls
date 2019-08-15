@@ -40,7 +40,7 @@ int		if_read_lnk2(char *str, char *tab)
 	l = ft_strlen(str) - 1;
 	if (t == -1)
 	{
-		write(2, "./ft_ls: ", 9);
+		ft_putstr_error("./ft_ls: ");
 		perror(str);
 		return (0);
 	}

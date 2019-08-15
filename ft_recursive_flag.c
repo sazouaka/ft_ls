@@ -51,7 +51,8 @@ void	ft_recursive_flag(t_dlist *head, char *tab)
 			{
 				ft_putchar('\n');
 				ft_putstr(node->path_name);
-				ft_putstr(":\n./ft_ls: ");
+				ft_putstr(":\n");
+				ft_putstr_error("./ft_ls: ");
 				perror(trim_path(node->path_name));
 			}
 			else

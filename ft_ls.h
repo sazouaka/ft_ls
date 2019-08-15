@@ -107,5 +107,6 @@ int					nbr_len(long long n);
 void				nbr_space(long long link, int max);
 void				ft_putstr_clr(char *s, mode_t mode);
 void				ft_sort_args(char **av, int i);
+void				ft_putstr_error(char const *s);
 
 #endif
