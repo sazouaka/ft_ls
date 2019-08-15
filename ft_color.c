@@ -33,7 +33,7 @@ char	*get_f_color(mode_t mode)
 		return (F_BLK);
 	if ((mode & S_IWOTH) && (mode & S_ISVTX))
 		return (F_BLK);
-	if ((mode & S_IWOTH) && !(mode & S_ISVTX))
+	if ((mode & S_IWOTH) && !(mode & S_ISVTX) && S_ISDIR(mode))
 		return (F_BLK);
 	if (S_ISDIR(mode))
 		return (F_BLU);
@@ -88,7 +88,8 @@ void	ft_putstr_clr_colum(char *s, char *f_color, char *b_color)
 		ft_putstr(b_color);
 		while (s[i])
 		{
-			if (s[i] == ' ' && s[i + 1] == ' ')
+			if ((s[i] == ' ' && s[i + 1] == ' ') ||
+				(s[i] == ' ' && s[i + 1] == '\0'))
 				ft_putstr(B_NRM);
 			write(1, &s[i], 1);
 			i++;
