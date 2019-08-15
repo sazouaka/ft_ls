@@ -43,7 +43,11 @@ char	*flag_tab(char *tab, char **av, int i)
 			exit(1);
 		}
 		else
+		{
 			tab[j] = av[i][z];
+			(j == 2) ? (tab[7] = '0') : 0;
+			(j == 7) ? (tab[2] = '0') : 0;
+		}
 		z++;
 	}
 	return (tab);
