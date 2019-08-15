@@ -26,7 +26,7 @@
 # include <grp.h>
 # include <sys/ioctl.h>
 
-# define FLAGS "RalrtgG1"
+# define FLAGS "RalrtgG1A"
 # define MAX(m,n) (m > n) ? m : n
 # define IFREE(m) (m != NULL) ? (free(m), (m = NULL)) : 0
 # define TAB(i,c) tab[i] = c
@@ -84,7 +84,7 @@ char				*get_flag_tab(int ac, char **av, int *index);
 void				print_list(t_dlist *head, char c, char col);
 void				ft_l_flag(t_dlist *head, char *tab, int d);
 long long			ft_blocks(t_dlist *head);
-t_dlist				*ft_ls(DIR *dir, char a, char *str);
+t_dlist				*ft_ls(DIR *dir, char a, char *str, char aa);
 t_dlist				*get_files(int index, char **argv, char *tab);
 t_dlist				*get_dirs(int argc, char **argv, char *tab);
 t_dlist				*get_file(char *str);
@@ -110,5 +110,17 @@ void				ft_putstr_clr(char *s, mode_t mode);
 void				ft_sort_args(char **av, int i);
 void				ft_putstr_error(char const *s);
 void				print_list_colum(t_dlist *head, char c);
+void				ft_putstr_clr_colum(char *s, char *f_color, char *b_color);
+char				*get_f_color(mode_t mode);
+char				*get_b_color(mode_t mode);
+void				free_tab(char **tab);
+void				free_tab_tab(char ***tab);
+int					max_colum(int *nb, t_dlist *head, char c);
+int					get_col(int max, int *r, int nb);
+void				print_to_colum_clr(char ***tab, int row, int nb);
+char				**ft_fill_clr(t_dlist *node, int max);
+char				***list_to_clr(t_dlist *head, int max, int nb);
+char				*ft_fill_end_space(char *src, int len);
+int					cmp(char *s1, char *s2);
 
 #endif

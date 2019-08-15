@@ -37,7 +37,7 @@ void	print_all_helper(t_dlist *dirs, char *tab)
 		dirs = dirs->next;
 		return ;
 	}
-	head = ft_ls(d, tab[1], dirs->name);
+	head = ft_ls(d, tab[1], dirs->name, tab[8]);
 	if (head)
 	{
 		ascii_sort(head);

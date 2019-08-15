@@ -76,3 +76,24 @@ void	ft_putstr_clr(char *s, mode_t mode)
 		ft_putstr(B_NRM);
 	}
 }
+
+void	ft_putstr_clr_colum(char *s, char *f_color, char *b_color)
+{
+	int		i;
+
+	if (s)
+	{
+		i = 0;
+		ft_putstr(f_color);
+		ft_putstr(b_color);
+		while (s[i])
+		{
+			if (s[i] == ' ' && s[i + 1] == ' ')
+				ft_putstr(B_NRM);
+			write(1, &s[i], 1);
+			i++;
+		}
+		ft_putstr(F_NRM);
+		ft_putstr(B_NRM);
+	}
+}

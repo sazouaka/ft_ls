@@ -31,7 +31,7 @@ void	ft_ls2(t_dlist **head, t_dlist **files, char *t, char *d_name)
 	IFREE(t2);
 }
 
-t_dlist	*ft_ls(DIR *dir, char a, char *str)
+t_dlist	*ft_ls(DIR *dir, char a, char *str, char aa)
 {
 	struct dirent	*read;
 	t_dlist			*files;
@@ -46,7 +46,10 @@ t_dlist	*ft_ls(DIR *dir, char a, char *str)
 		t = ft_strjoin(str, "/");
 	while ((read = readdir(dir)))
 	{
-		if ((ft_char(read->d_name, '.')) == 1 && a != 'a')
+		if ((ft_char(read->d_name, '.')) == 1 && a != 'a' && aa != 'A')
+			continue;
+		if (aa == 'A' && a != 'a' && (cmp((read->d_name), ".") == 0 ||
+			cmp((read->d_name), "..") == 0))
 			continue;
 		ft_ls2(&head, &files, t, read->d_name);
 	}

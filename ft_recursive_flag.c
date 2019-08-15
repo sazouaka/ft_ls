@@ -32,6 +32,15 @@ void	ft_r_helper(t_dlist *head_r, t_dlist *node, char *tab)
 	}
 }
 
+void	p_denided(char *str)
+{
+	ft_putchar('\n');
+	ft_putstr(str);
+	ft_putstr(":\n");
+	ft_putstr_error("./ft_ls: ");
+	perror(trim_path(str));
+}
+
 void	ft_recursive_flag(t_dlist *head, char *tab)
 {
 	t_dlist	*node;
@@ -48,15 +57,10 @@ void	ft_recursive_flag(t_dlist *head, char *tab)
 				continue;
 			}
 			if ((d = opendir(node->path_name)) == NULL)
-			{
-				ft_putchar('\n');
-				ft_putstr(node->path_name);
-				ft_putstr(":\n");
-				ft_putstr_error("./ft_ls: ");
-				perror(trim_path(node->path_name));
-			}
+				p_denided(node->path_name);
 			else
-				ft_r_helper(ft_ls(d, tab[1], node->path_name), node, tab);
+				ft_r_helper(ft_ls(d, tab[1], node->path_name,
+					tab[8]), node, tab);
 		}
 		node = node->next;
 	}

@@ -42,3 +42,29 @@ void	free_list2(t_dlist *head)
 		IFREE(tmp);
 	}
 }
+
+void	free_tab(char **tab)
+{
+	int	i;
+
+	i = 0;
+	while (tab[i])
+	{
+		free(tab[i]);
+		i++;
+	}
+	free(tab);
+}
+
+void	free_tab_tab(char ***tab)
+{
+	int	i;
+
+	i = 0;
+	while (tab[i])
+	{
+		free_tab(tab[i]);
+		i++;
+	}
+	free(tab);
+}
