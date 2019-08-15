@@ -24,6 +24,7 @@
 # include <sys/acl.h>
 # include <pwd.h>
 # include <grp.h>
+# include <sys/ioctl.h>
 
 # define FLAGS "RalrtgG"
 # define MAX(m,n) (m > n) ? m : n
