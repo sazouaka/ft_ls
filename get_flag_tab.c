@@ -39,7 +39,7 @@ char	*flag_tab(char *tab, char **av, int i)
 		{
 			ft_putstr_error("./ft_ls: illegal option -- ");
 			write(2, &av[i][z], 1);
-			ft_putstr_error("\nusage: ./ft_ls [-GRaglrt1] [file ...]\n");
+			ft_putstr_error("\nusage: ./ft_ls [-AGRaglrt1] [file ...]\n");
 			exit(1);
 		}
 		else
@@ -52,7 +52,7 @@ char	*flag_tab(char *tab, char **av, int i)
 void	tab_double_dash(void)
 {
 	ft_putstr_error("./ft_ls: illegal option -- -\n");
-	ft_putstr_error("usage: ./ft_ls [-GRaglrt1] [file ...]\n");
+	ft_putstr_error("usage: ./ft_ls [-AGRaglrt1] [file ...]\n");
 	exit(1);
 }
 
