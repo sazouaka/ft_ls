@@ -26,7 +26,7 @@
 # include <grp.h>
 # include <sys/ioctl.h>
 
-# define FLAGS "RalrtgG"
+# define FLAGS "RalrtgG1"
 # define MAX(m,n) (m > n) ? m : n
 # define IFREE(m) (m != NULL) ? (free(m), (m = NULL)) : 0
 # define TAB(i,c) tab[i] = c
@@ -81,7 +81,7 @@ void				sort_by_flag(t_dlist *head, char r, char t);
 void				ft_swap_sort(t_dlist *node, t_dlist *j);
 int					flag_search(char c);
 char				*get_flag_tab(int ac, char **av, int *index);
-void				print_list(t_dlist *head, char c);
+void				print_list(t_dlist *head, char c, char col);
 void				ft_l_flag(t_dlist *head, char *tab, int d);
 long long			ft_blocks(t_dlist *head);
 t_dlist				*ft_ls(DIR *dir, char a, char *str);
@@ -109,5 +109,6 @@ void				nbr_space(long long link, int max);
 void				ft_putstr_clr(char *s, mode_t mode);
 void				ft_sort_args(char **av, int i);
 void				ft_putstr_error(char const *s);
+void				print_list_colum(t_dlist *head, char c);
 
 #endif

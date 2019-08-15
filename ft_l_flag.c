@@ -87,7 +87,7 @@ void		ft_l_flag(t_dlist *head, char *tab, int d)
 	struct stat		sb;
 	t_max			max;
 
-	if (tab[2] == 'l' || tab[5] == 'g')
+	if (tab[7] != '1' && (tab[2] == 'l' || tab[5] == 'g'))
 	{
 		max_total(d, &head, &max);
 		node = head;
@@ -107,5 +107,5 @@ void		ft_l_flag(t_dlist *head, char *tab, int d)
 		}
 	}
 	else
-		print_list(head, tab[6]);
+		print_list(head, tab[6], tab[7]);
 }
