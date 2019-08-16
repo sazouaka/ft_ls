@@ -33,6 +33,7 @@
 # define IF_ELS(test, var, i, o) (test) ? (var = i) : (var = o)
 # define INIT(a,b,c,d,e,f) a = b = c = d = e = f = 0
 # define MONTHS_6 15724800
+
 # define F_BLK  "\x1b[30m"
 # define F_NRM  "\x1b[39m"
 # define F_RED  "\x1B[31m"

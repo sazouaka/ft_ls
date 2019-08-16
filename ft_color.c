@@ -24,12 +24,12 @@ char	*get_f_color(mode_t mode)
 		return (F_MAG);
 	if (S_ISSOCK(mode))
 		return (F_GRN);
+	if (!(mode & S_IXGRP) && (mode & S_ISGID) && (!S_ISDIR(mode)))
+		return (F_BLK);
 	if (((mode & S_IXUSR) || (mode & S_IXGRP) ||
 		(mode & S_IXOTH)) && (!S_ISDIR(mode)))
 		return (F_RED);
 	if ((mode & S_IXUSR) && (mode & S_ISUID))
-		return (F_BLK);
-	if ((mode & S_IXGRP) && (mode & S_ISGID))
 		return (F_BLK);
 	if ((mode & S_IWOTH) && (mode & S_ISVTX))
 		return (F_BLK);
@@ -48,7 +48,7 @@ char	*get_b_color(mode_t mode)
 		return (B_YEL);
 	if ((mode & S_IXUSR) && (mode & S_ISUID) && (!S_ISDIR(mode)))
 		return (B_RED);
-	if ((mode & S_IXGRP) && (mode & S_ISGID) && (!S_ISDIR(mode)))
+	if (!(mode & S_IXGRP) && (mode & S_ISGID) && (!S_ISDIR(mode)))
 		return (B_CYN);
 	if (S_ISDIR(mode))
 	{
