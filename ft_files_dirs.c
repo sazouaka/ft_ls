@@ -16,6 +16,7 @@ int		verify_type(char *str)
 {
 	struct stat	st;
 	int			ret;
+	DIR			*d;
 
 	if ((ret = lstat(str, &st)) == 0)
 	{
@@ -23,8 +24,11 @@ int		verify_type(char *str)
 			return (1);
 		if (S_ISLNK(st.st_mode))
 		{
-			if (opendir(str) != NULL)
+			if ((d = opendir(str)) != NULL)
+			{
+				closedir(d);
 				return (3);
+			}
 			else
 				return (2);
 		}
